@@ -7,6 +7,8 @@ export default defineConfig({
     port: 5173,
     // Local dev: forward API calls to the Django server.
     proxy: { '/api': { target: process.env.VITE_DEV_API ?? 'http://localhost:8000', changeOrigin: true } },
+    host: true,
+    allowedHosts: ['.trycloudflare.com']
   },
   build: {
     sourcemap: false,
