@@ -1,13 +1,11 @@
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useEffect, useMemo } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, useMap } from 'react-leaflet';
 import type { AnalysisResponse, HeatmapResponse, Metric } from '../../types';
+import { Basemap } from './Basemap';
 import { RiskHeatOverlay } from './RiskHeatOverlay';
 import { RoutesLayer } from './RoutesLayer';
-
-const TILE_URL = (import.meta.env.VITE_TILE_URL as string | undefined) ?? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 export interface FocusTarget {
   lat: number;
@@ -59,7 +57,7 @@ function HeatOverlay({ heat }: { heat: HeatView }) {
 export function MapView({ analysis, selectedId, onSelectRoute, heat, showAllCheckpoints, focus }: Props) {
   return (
     <MapContainer center={[39.5, -98.35]} zoom={4} minZoom={3} preferCanvas className="map" zoomControl>
-      <TileLayer url={TILE_URL} attribution={ATTRIBUTION} subdomains="abcd" maxZoom={18} />
+      <Basemap />
       <FitToRoutes analysis={analysis} />
       <FlyToFocus focus={focus} />
       {heat && <HeatOverlay heat={heat} />}
